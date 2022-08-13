@@ -12,47 +12,21 @@ namespace WindowsFormsApp1
 {
     public class IconBtn : Button
     {
+        public FontCollection.SegMDL2 FontChar { get; set; }
+        public int FontCharCustom { get; set; }
+        public float FontSize { get; set; } = 18.5f;
+        public FontStyle FontStyle { get; set; } = FontStyle.Bold;
 
-        public IconBtn()
+
+        protected int KeyVal => (FontChar == FontCollection.SegMDL2.Custom) 
+            ? FontCharCustom : (int)FontChar;
+
+
+        private string _text;
+        public override string Text 
         {
-            //this.Paint += IconBtn_Paint;
-        }
-
-
-        private string _x;
-
-
-
-        public IconFont.IconFontE KeyCode { get; set; }
-        public int KeyCodeCustom { get; set; }
-
-        protected int KeyVal
-        {
-            get
-            {
-                if (KeyCode == IconFont.IconFontE.Custom)
-                {
-                    return (int)KeyCodeCustom;
-                }
-
-                    return (int) KeyCode;
-            }
-        }
-
-
-
-        private string _t;
-        public override string Text { get => "";
-            set { _t = value; }
-        }
-
-        private void IconBtn_Paint(object sender, PaintEventArgs e)
-        {
-
-            string iconChar = char.ConvertFromUtf32((int)KeyCode);
-            Font iconFont = new Font(IconFont.FF, 18.5f, FontStyle.Bold);
-            e.Graphics.DrawString(iconChar, iconFont, new SolidBrush(Color.Orange), new PointF(10, 10));
-
+            get => ""; 
+            set => _text = value;
         }
 
         public void AlignToParent()
@@ -81,7 +55,7 @@ namespace WindowsFormsApp1
             stringFormat.LineAlignment = StringAlignment.Center;
 
             string iconChar = char.ConvertFromUtf32(KeyVal);
-            Font iconFont = new Font(IconFont.FF, 18.5f, FontStyle.Bold);
+            Font iconFont = new Font(FontCollection.FFSegMDL2, FontSize, FontStyle);
             
             e.Graphics.DrawString(iconChar, iconFont,
                 new SolidBrush(this.ForeColor),
